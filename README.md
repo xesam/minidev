@@ -76,7 +76,7 @@
 |----|------|-----------|------|
 | [`@mini-dev/request`](https://www.npmjs.com/package/@mini-dev/request) | ![npm](https://img.shields.io/npm/v/@mini-dev/request.svg) | 跨端 HTTP 请求库：Promise 化 + 两段式拦截器 + 取消 / 超时 / 重试 / 缓存 / chunked 流式。平台包：[`-wx`](https://www.npmjs.com/package/@mini-dev/request-wx) / [`-my`](https://www.npmjs.com/package/@mini-dev/request-my) / [`-tt`](https://www.npmjs.com/package/@mini-dev/request-tt) | [xesam/minidev-request](https://github.com/xesam/minidev-request) |
 | [`@mini-dev/location`](https://www.npmjs.com/package/@mini-dev/location) | ![npm](https://img.shields.io/npm/v/@mini-dev/location.svg) | 跨端设备定位库：缓存 / 超时 / 重试 / 取消 + 自定义拦截器。平台包：[`-wx`](https://www.npmjs.com/package/@mini-dev/location-wx) / [`-my`](https://www.npmjs.com/package/@mini-dev/location-my) / [`-tt`](https://www.npmjs.com/package/@mini-dev/location-tt) | [xesam/minidev-location](https://github.com/xesam/minidev-location) |
-| [`@mini-dev/event`](https://www.npmjs.com/package/@mini-dev/event) | — | 生命周期感知事件总线：按页面活跃态挂起 / 补投，补原生跨页通信空缺。伴生包 [`@mini-dev/event-hook`](https://www.npmjs.com/package/@mini-dev/event-hook) 自动接线生命周期 | [xesam/minidev-event](https://github.com/xesam/minidev-event) |
+| [`@mini-dev/event`](https://www.npmjs.com/package/@mini-dev/event) | ![npm](https://img.shields.io/npm/v/@mini-dev/event.svg) | 生命周期感知事件总线：按页面活跃态挂起 / 补投，补原生跨页通信空缺。伴生包 [`@mini-dev/event-hook`](https://www.npmjs.com/package/@mini-dev/event-hook) 自动接线生命周期 | [xesam/minidev-event](https://github.com/xesam/minidev-event) |
 
 #### 渲染层
 
@@ -214,7 +214,7 @@ npm install @mini-dev/markdown-core @mini-dev/markdown-adapter-wechat
 | `@mini-dev/router` | ![npm](https://img.shields.io/npm/v/@mini-dev/router.svg) | 微信 / 支付宝 / 抖音 / 百度 / QQ | 源码直发（jest, 90% 覆盖率门禁） |
 | `@mini-dev/unipath` | ![npm](https://img.shields.io/npm/v/@mini-dev/unipath.svg) | 平台无关 | 构建型单包（tsdown） |
 | `@mini-dev/condition` | ![npm](https://img.shields.io/npm/v/@mini-dev/condition.svg) | 平台无关 | pnpm monorepo（1 包） |
-| `@mini-dev/event` | 待发布 | 平台无关（核心不碰全局） | pnpm monorepo（2 包） |
+| `@mini-dev/event` | ![npm](https://img.shields.io/npm/v/@mini-dev/event.svg) | 平台无关（核心不碰全局） | pnpm monorepo（2 包） |
 | `@mini-dev/request` | ![npm](https://img.shields.io/npm/v/@mini-dev/request.svg) | 微信 / 支付宝 / 抖音 | pnpm monorepo（core + 3 平台包） |
 | `@mini-dev/location` | ![npm](https://img.shields.io/npm/v/@mini-dev/location.svg) | 微信 / 支付宝 / 抖音 | pnpm monorepo（core + 3 平台包） |
 | `@mini-dev/markdown` | ![npm](https://img.shields.io/npm/v/@mini-dev/markdown-core.svg) | 微信（当前）/ 支付宝 / 抖音（adapter 待补） | pnpm monorepo（6 包） |
