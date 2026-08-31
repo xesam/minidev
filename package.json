@@ -1,0 +1,21 @@
+{
+  "name": "minidev",
+  "version": "0.0.0",
+  "description": "> 面向**原生小程序开发**的开源工具箱。不换框架，只补空缺。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xesam/minidev.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/xesam/minidev/issues"
+  },
+  "homepage": "https://github.com/xesam/minidev#readme"
+}
