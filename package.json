@@ -1,7 +1,7 @@
 {
   "name": "minidev",
   "version": "0.0.0",
-  "description": "> 面向**原生小程序开发**的开源工具箱。不换框架，只补空缺。",
+  "description": "面向原生小程序开发的开源工具箱。不换框架，只补空缺。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

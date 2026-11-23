@@ -10,6 +10,7 @@
 
 - [1. 这是什么](#1-这是什么)
 - [2. 设计哲学](#2-设计哲学)
+  - [2.1 封装原生 API 的两类做法](#21-封装原生-api-的两类做法)
 - [3. 包总览](#3-包总览)
   - [3.1 core —— 工具库](#31-core--工具库)
   - [3.2 CLI 工具](#32-cli-工具)
@@ -41,10 +42,18 @@
 | 原则 | 说明 |
 |------|------|
 | **每个库只解决一件事** | 一个库一个职责。不膨胀、不捆绑，按需组合 |
-| **增强，不归一** | 包装库原样透传原生入参、响应、错误，只在其上叠加能力（缓存、重试、超时、参数序列化…）。**不抹平平台差异，不在运行时探测平台** |
 | **平台拆包** | 需要触碰 `wx` / `my` / `tt` 全局的库，按平台拆成独立单入口包（`-wx` / `-my` / `-tt`），每个包各自 re-export 平台无关的 core |
 | **核心不接管生命周期** | 工具库只提供机制（「做什么」），不决定「什么时候做」。生命周期接线（如页面 `onShow` / `onHide`）拆为可选伴生包，由使用方按需接入 |
 | **零依赖优先** | 纯逻辑库零运行时依赖；需要中间件管道的库仅依赖 `koa-compose`；核心不引入构建步骤则直接发布源码 |
+
+### 2.1 封装原生 API 的两类做法
+
+触碰原生 API 的库按封装方式分为两类：**默认「增强，不归一」**，仅当三端碎片化到无法原样透传时，才改走「归一」。
+
+| 类型 | 说明 | 适用包 |
+|------|------|--------|
+| **增强，不归一** | 原样透传原生入参、响应、错误，只在其上叠加能力（缓存、重试、超时、参数序列化…）。**不抹平平台差异，不在运行时探测平台** | `request`、`location`、`router`、`unipath` |
+| **归一** | 提供统一的自有 12 方法契约，平台差异在管道内归一 | `storage`——三端键缺失返回形状（空串 / `null` / `fail` 回调）、`errMsg` 键名差异等碎片化严重，无法透传 |
 
 ---
 
@@ -76,6 +85,7 @@
 |----|------|-----------|------|
 | [`@mini-dev/request`](https://www.npmjs.com/package/@mini-dev/request) | ![npm](https://img.shields.io/npm/v/@mini-dev/request.svg) | 跨端 HTTP 请求库：Promise 化 + 两段式拦截器 + 取消 / 超时 / 重试 / 缓存 / chunked 流式。平台包：[`-wx`](https://www.npmjs.com/package/@mini-dev/request-wx) / [`-my`](https://www.npmjs.com/package/@mini-dev/request-my) / [`-tt`](https://www.npmjs.com/package/@mini-dev/request-tt) | [xesam/minidev-request](https://github.com/xesam/minidev-request) |
 | [`@mini-dev/location`](https://www.npmjs.com/package/@mini-dev/location) | ![npm](https://img.shields.io/npm/v/@mini-dev/location.svg) | 跨端设备定位库：缓存 / 超时 / 重试 / 取消 + 自定义拦截器。平台包：[`-wx`](https://www.npmjs.com/package/@mini-dev/location-wx) / [`-my`](https://www.npmjs.com/package/@mini-dev/location-my) / [`-tt`](https://www.npmjs.com/package/@mini-dev/location-tt) | [xesam/minidev-location](https://github.com/xesam/minidev-location) |
+| [`@mini-dev/storage`](https://www.npmjs.com/package/@mini-dev/storage) | ![npm](https://img.shields.io/npm/v/@mini-dev/storage.svg) | 跨端本地存储库：统一 12 方法自有契约，叠加命名空间 / TTL 过期 / 键缺失默认值 / 类型化键表。平台包：[`-wx`](https://www.npmjs.com/package/@mini-dev/storage-wx) / [`-my`](https://www.npmjs.com/package/@mini-dev/storage-my) / [`-tt`](https://www.npmjs.com/package/@mini-dev/storage-tt) | [xesam/minidev-storage](https://github.com/xesam/minidev-storage) |
 | [`@mini-dev/event`](https://www.npmjs.com/package/@mini-dev/event) | ![npm](https://img.shields.io/npm/v/@mini-dev/event.svg) | 生命周期感知事件总线：按页面活跃态挂起 / 补投，补原生跨页通信空缺。伴生包 [`@mini-dev/event-hook`](https://www.npmjs.com/package/@mini-dev/event-hook) 自动接线生命周期 | [xesam/minidev-event](https://github.com/xesam/minidev-event) |
 
 #### 渲染层
@@ -121,6 +131,7 @@ graph TB
     subgraph 数据与通信
         request["@mini-dev/request<br/>HTTP 增强"]
         location["@mini-dev/location<br/>定位增强"]
+        storage["@mini-dev/storage<br/>统一存储"]
         event["@mini-dev/event<br/>事件总线"]
     end
 
@@ -173,6 +184,11 @@ npm install @mini-dev/location-wx   # 微信
 npm install @mini-dev/location-my   # 支付宝
 npm install @mini-dev/location-tt   # 抖音
 
+# 本地存储（按平台选一个）
+npm install @mini-dev/storage-wx    # 微信
+npm install @mini-dev/storage-my    # 支付宝
+npm install @mini-dev/storage-tt    # 抖音
+
 # 事件总线
 npm install @mini-dev/event @mini-dev/event-hook
 
@@ -217,6 +233,7 @@ npm install @mini-dev/markdown-core @mini-dev/markdown-adapter-wechat
 | `@mini-dev/event` | ![npm](https://img.shields.io/npm/v/@mini-dev/event.svg) | 平台无关（核心不碰全局） | pnpm monorepo（2 包） |
 | `@mini-dev/request` | ![npm](https://img.shields.io/npm/v/@mini-dev/request.svg) | 微信 / 支付宝 / 抖音 | pnpm monorepo（core + 3 平台包） |
 | `@mini-dev/location` | ![npm](https://img.shields.io/npm/v/@mini-dev/location.svg) | 微信 / 支付宝 / 抖音 | pnpm monorepo（core + 3 平台包） |
+| `@mini-dev/storage` | ![npm](https://img.shields.io/npm/v/@mini-dev/storage.svg) | 微信 / 支付宝 / 抖音 | pnpm monorepo（core + 3 平台包） |
 | `@mini-dev/markdown` | ![npm](https://img.shields.io/npm/v/@mini-dev/markdown-core.svg) | 微信（当前）/ 支付宝 / 抖音（adapter 待补） | pnpm monorepo（6 包） |
 
 ---
